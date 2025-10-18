@@ -6,10 +6,12 @@ This is a collection of small, simple tasks I want to constantly have running on
 
 Only User/Home context stuff like:
 
-- [ ] Removing any old unnamed TMUX sessions
+- [x] Removing any old unnamed TMUX sessions
 - [ ] Regular clearing of logs, paths
-- [ ] Changing volume of applications
+- [-] Changing volume of applications
 - [ ] Keeping SSH sessions active
+
+Put any commands, shellscripts, programs, whatever in `~/.config/houseman/jobs.txt` to run them.
 
 Future ideas:
 
