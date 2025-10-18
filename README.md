@@ -76,7 +76,7 @@ EOF
 
 systemctl --user daemon-reexec
 systemctl --user daemon-reload
-systemctl --user enable --now "$SERVICE_NAME".service
+systemctl --user enable --now "$HOUSEMAN_SERVICE_FILE"
 systemctl --user enable --now "$HOUSEMAN_TIMER_FILE"
 
 loginctl enable-linger "$USER"
