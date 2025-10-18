@@ -25,7 +25,7 @@ The program checks a todo list, with set intervals and executes tasks at the des
 Clone to `~/.config`:
 
 ```bash
-git clone https://github.com/rolflobker/HouseMan ~/.config/houseman
+git clone https://github.com/rolflobker/theHouseMan.git ~/.config/houseman ~/.config/houseman
 ```
 
 Modify `~/.config/houseman/jobs.txt` to your liking.
