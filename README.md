@@ -55,6 +55,8 @@ Description=the HouseMan -- doing his chores
 
 [Service]
 Type=oneshot
+Environment=HOME=%h
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
 ExecStart=%h/.config/houseman/houseman.sh
 EOF
 

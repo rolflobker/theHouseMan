@@ -1,2 +1,2 @@
-10 ~/.config/houseman/jobs/volume_adjuster
-10 ~/.config/houseman/jobs/tmux_close_numbered_sessions
+10 $HOME/.config/houseman/jobs/volume_adjuster
+60 $HOME/.config/houseman/jobs/tmux_close_numbered_sessions

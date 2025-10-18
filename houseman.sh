@@ -27,7 +27,10 @@ while IFS= read -r line; do
 
     if ((elapsed >= interval)); then
         echo "[$(date)] Running: $cmd" >>$STATE_DIR/log
-        bash -c "$cmd" &
+        set -x
+        "$cmd" >>"$STATE_DIR/log" 2>&1
+        set +x
         echo "$now_epoch" >"$state_file"
     fi
+
 done <"$JOBS_FILE"
