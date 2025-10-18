@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+target_vol="40%"
+id=$(pactl --format json list sink-inputs | jq -r '.[] | select(.properties["media.name"] | test("ETHUSD"; "i")) | .index')
+
+if [[ -n "$id" ]]; then
+    pactl set-sink-input-volume "$id" "$target_vol"
+fi
