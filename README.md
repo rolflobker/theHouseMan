@@ -8,7 +8,7 @@ Only User/Home context stuff like:
 
 - [x] Removing any old unnamed TMUX sessions
 - [ ] Regular clearing of logs, paths
-- [-] Changing volume of applications
+- [x] Changing volume of applications
 - [ ] Keeping SSH sessions active
 
 Put any commands, shellscripts, programs, whatever in `~/.config/houseman/jobs.txt` to run them.
