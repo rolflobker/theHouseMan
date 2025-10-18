@@ -47,8 +47,6 @@ HOUSEMAN_SERVICE_NAME="houseman"
 HOUSEMAN_SERVICE_FILE="$USER_SYSTEMD_DIR/${HOUSEMAN_SERVICE_NAME}.service"
 HOUSEMAN_TIMER_FILE="$USER_SYSTEMD_DIR/${HOUSEMAN_SERVICE_NAME}.timer"
 
-HOUSEMAN_SCRIPT="$HOME/.config/houseman/houseman.sh"
-
 mkdir -p "$USER_SYSTEMD_DIR"
 
 cat >"$HOUSEMAN_SERVICE_FILE" <<EOF
@@ -57,18 +55,19 @@ Description=the HouseMan -- doing his chores
 
 [Service]
 Type=oneshot
-ExecStart=$HOUSEMAN_SCRIPT
+ExecStart=%h/.config/houseman/houseman.sh
 EOF
-
 
 cat >"$HOUSEMAN_TIMER_FILE" <<EOF
 [Unit]
 Description=Put the HouseMan to work
 
 [Timer]
-OnUnitActiveSec=1m
-AccuracySec=10s
+OnBootSec=10s
+OnUnitActiveSec=10s
+AccuracySec=1s
 Persistent=true
+Unit=houseman.service
 
 [Install]
 WantedBy=timers.target
@@ -76,9 +75,10 @@ EOF
 
 systemctl --user daemon-reexec
 systemctl --user daemon-reload
-systemctl --user enable --now "$HOUSEMAN_SERVICE_FILE"
-systemctl --user enable --now "$HOUSEMAN_TIMER_FILE"
 
+# enable and start the timer
+systemctl --user enable --now "${HOUSEMAN_SERVICE_NAME}.timer"
+
+# keep user services active after logout
 loginctl enable-linger "$USER"
-
 ```
