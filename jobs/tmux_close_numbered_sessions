@@ -3,21 +3,21 @@
 # kills old, unnamed TMUX sessions (with number as name)
 # Only kills sessions older than MAX_AGE_MIN minutes
 # Only kills sessions with $HOME as CWD
+# Only kills not currently opened "$HOME 0" filter. To also close active open "$HOME 1"
 
 MAX_AGE_MIN=1
 
 NOW=$(($(date +%s)))
 
 tmux ls -F '#{session_name} #{session_activity} #{session_path} #{session_attached}' | grep -E '^[0-9]+' | grep "$HOME 0" | while read -r LINE; do
+    SESSION_NAME=$(echo $LINE | awk '{print $1}')
+    LAST_ACTIVITY=$(echo $LINE | awk '{print $2}')
+    LAST_ACTIVITY_MINS_ELAPSED=$(((NOW - LAST_ACTIVITY) / 60))
+    # print all sessions
+    # echo "${SESSION_NAME} is ${LAST_ACTIVITY_MINS_ELAPSED}min" >>/tmp/houseman_rolf/tmux_log
 
-  SESSION_NAME=$(echo $LINE | awk '{print $1}')
-  LAST_ACTIVITY=$(echo $LINE | awk '{print $2}')
-  LAST_ACTIVITY_MINS_ELAPSED=$(((NOW - LAST_ACTIVITY) / 60))
-  # print all sessions
-  # echo "${SESSION_NAME} is ${LAST_ACTIVITY_MINS_ELAPSED}min"
-
-  if [[ "$LAST_ACTIVITY_MINS_ELAPSED" -gt "$MAX_AGE_MIN" ]]; then
-    tmux kill-session -t ${SESSION_NAME}
-    # echo "${SESSION_NAME} is ${LAST_ACTIVITY_MINS_ELAPSED}min inactive and would be killed."
-  fi
+    if [[ "$LAST_ACTIVITY_MINS_ELAPSED" -gt "$MAX_AGE_MIN" ]]; then
+        tmux kill-session -t ${SESSION_NAME}
+        echo "${SESSION_NAME} is ${LAST_ACTIVITY_MINS_ELAPSED}min inactive and has been be killed."
+    fi
 done
